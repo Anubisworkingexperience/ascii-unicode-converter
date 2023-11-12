@@ -12,27 +12,39 @@ label.pack()
 titleLabel1 = Label(text='ascii', font=('Arial', 16))
 titleLabel1.pack()
 
-arrowLabel = Label(text='⇄', font=('Arial', 16), cursor='exchange')
+arrowLabel = Label(text='⇄', font=('Arial', 24), cursor='exchange')
 arrowLabel.pack()
+
+def exchangeLabelTexts(self):
+    if titleLabel1['text'] == 'ascii':
+        titleLabel1.config(text='unicode')
+        titleLabel2.config(text='ascii')
+    else:
+        titleLabel1.config(text='ascii')
+        titleLabel2.config(text='unicode')
+
+arrowLabel.bind('<Button-1>', exchangeLabelTexts)
 
 titleLabel2 = Label(text='unicode', font=('Arial', 16))
 titleLabel2.pack()
 
-textField = Text(wrap='char')
+textField = Text(wrap='char', height=10)
 textField.pack()
 
-scrollbar = Scrollbar(root)
-scrollbar.pack(side=RIGHT)
+output = Text(wrap='char', height=10, background='#e1e6e2', state='disabled')
+output.pack()
 
-border_color = Frame(root, background='white')
-
-convertButton = Label(border_color, text='Конвертировать', font=('Arial', 16), background='#5d4fe0', foreground='#ffffff',padx=10, pady=10)
+convertButton = Label(text='Конвертировать', font=('Arial', 16), background='#5d4fe0', foreground='#ffffff',padx=10, pady=10)
 convertButton.pack()
-border_color.pack()
 
 mainMenu = Menu()
-mainMenu.add_cascade(label='Сохранить')
-mainMenu.add_cascade(label='Открыть')
+mainMenu.add_cascade(label='Сохранить в файл')
+mainMenu.add_cascade(label='Текст из файла')
+
+def unicodeConvert(event):
+    textField['text'] = textField['text'].encode('unicode')
+
+convertButton.bind('<Button-1>', unicodeConvert)
 
 root.config(menu=mainMenu)
 root.mainloop()

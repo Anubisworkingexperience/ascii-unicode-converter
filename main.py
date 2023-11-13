@@ -41,10 +41,28 @@ mainMenu = Menu()
 mainMenu.add_cascade(label='Сохранить в файл')
 mainMenu.add_cascade(label='Текст из файла')
 
-def unicodeConvert(event):
-    textField['text'] = textField['text'].encode('unicode')
+def convertEncodings(self):
+    if titleLabel1['text'] == 'ascii':
+        #clear text
+        asciiString = textField.get('1.0', 'end')
+        print(asciiString)
+        unicodeString = str(asciiString)
+        print(unicodeString)
+        output.config(state=NORMAL)
+        output.delete('1.0', END)
+        output.insert('1.0', unicodeString)
+        output.config(state=DISABLED)
+    else:
+        unicodeString = textField.get('1.0', 'end')
+        print(unicodeString)
+        asciiString = unicodeString.encode('ascii', 'ignore')
+        print(asciiString)
+        output.config(state=NORMAL)
+        output.delete('1.0', END)
+        output.insert('1.0', asciiString)
+        output.config(state=DISABLED)
 
-convertButton.bind('<Button-1>', unicodeConvert)
+convertButton.bind('<Button-1>', convertEncodings)
 
 root.config(menu=mainMenu)
 root.mainloop()

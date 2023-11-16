@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.filedialog import asksaveasfile
 from datetime import datetime
 from unidecode import unidecode
+from tkinter import filedialog as fd
  
 root = Tk()
 root.title("ascii-unicode-converter")    
@@ -53,9 +54,17 @@ def saveToFile():
     else:
         file = open(f'./files/{now}', 'w', encoding='ascii')
     file.write(outputText)
+    file.close()
 
 def textFromFile():
     print('текст из файла')
+    filename = fd.askopenfilename()
+    print(filename)
+    file = open(filename, 'r')
+    text = file.read()
+    print(text)
+    file.close()
+    textField.insert(END, text)
 
 mainMenu = Menu()
 mainMenu.add_command(label='Сохранить в файл', command= saveToFile)

@@ -4,7 +4,7 @@ from datetime import datetime
 from unidecode import unidecode
 from tkinter import filedialog as fd
  
-root = Tk()
+root = Tk() #главный фрейм
 root.title("ascii-unicode-converter")    
 root.geometry("750x750")
 root.grid_columnconfigure(0, weight = 1)
@@ -19,7 +19,7 @@ titleLabel1.pack()
 arrowLabel = Label(text='⇄', font=('Arial', 24), cursor='exchange')
 arrowLabel.pack()
 
-def exchangeLabelTexts(self):
+def exchangeLabelTexts(self): #смена ярлыков ascii/unicode
     if titleLabel1['text'] == 'ascii':
         titleLabel1.config(text='unicode')
         titleLabel2.config(text='ascii')
@@ -45,9 +45,9 @@ def saveToFile():
     print('saving file...')
     now = datetime.now()
     print(now)
-    outputText = output.get('1.0', 'end').strip()
+    outputText = output.get('1.0', 'end').strip() #текст в output начиная с начала
     print(outputText)
-    outputEncoding = convertEncodings(self=saveToFile)
+    outputEncoding = convertEncodings(self=saveToFile) #желаемая кодировка (в окне output)
     print(outputEncoding)
     if outputEncoding == 'ascii':
         file = open(f'./files/{now}', 'w', encoding='utf-8')
@@ -66,7 +66,7 @@ def textFromFile():
     file.close()
     textField.insert(END, text)
 
-mainMenu = Menu()
+mainMenu = Menu() #верхняя панель
 mainMenu.add_command(label='Сохранить в файл', command= saveToFile)
 mainMenu.add_command(label='Текст из файла', command=textFromFile)
 
@@ -88,7 +88,7 @@ def convertEncodings(self):
         asciiString = unidecode(unicodeString)
         print(asciiString)
         output.config(state=NORMAL)
-        output.delete('1.0', END)
+        output.delete('1.0', END) #предварительная очистка output
         output.insert('1.0', asciiString)
         output.config(state=DISABLED)
     return outputEncoding
@@ -96,4 +96,4 @@ def convertEncodings(self):
 convertButton.bind('<Button-1>', convertEncodings)
 
 root.config(menu=mainMenu)
-root.mainloop()
+root.mainloop() #запуск окна программы
